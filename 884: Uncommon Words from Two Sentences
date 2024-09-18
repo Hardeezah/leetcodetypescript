@@ -1,0 +1,16 @@
+function uncommonFromSentences(s1: string, s2: string): string[] {
+
+    const wordCounts: Map<string, number> = new Map();
+
+    for (const word of [...s1.split(' '), ...s2.split(' ')]) {
+        wordCounts.set(word, (wordCounts.get(word) || 0) + 1);
+    }
+    const uncommonWords: string[] = [];
+    for (const [word, count] of wordCounts.entries()) {
+        if (count === 1) {
+            uncommonWords.push(word);
+        }
+    }
+
+    return uncommonWords;
+};
