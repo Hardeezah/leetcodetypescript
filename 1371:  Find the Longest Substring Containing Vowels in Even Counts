@@ -1,0 +1,30 @@
+function findTheLongestSubstring(s: string): number {
+ const vowelIndices: {[key: string]: number} = {'a': 0, 'e': 1, 'i': 2, 'o': 3, 'u': 4};
+    const firstSeenPrefix: Map<string, number> = new Map();
+    firstSeenPrefix.set('00000', -1);  // Initial state, no vowels encountered, prefix counts all zeros
+
+    let prefix: number[] = [0, 0, 0, 0, 0];  // To keep count of each vowel
+    let maxLength = 0;
+
+    for (let i = 0; i < s.length; i++) {
+        // If the character is a vowel, increase its count
+        if (s[i] in vowelIndices) {
+            let vowelPos = vowelIndices[s[i]];
+            prefix[vowelPos]++;  // Increment the count for the corresponding vowel
+        }
+
+        // Create a key from the current prefix counts
+        const key = prefix.map(count => count % 2).join('');  // Check even (0) or odd (1) count
+
+        // If we've seen this prefix before, calculate the length of the valid substring
+        if (firstSeenPrefix.has(key)) {
+            maxLength = Math.max(maxLength, i - firstSeenPrefix.get(key)!);
+        } else {
+            // If it's the first time we see this prefix, store the index
+            firstSeenPrefix.set(key, i);
+        }
+    }
+
+    return maxLength;
+    
+    };
