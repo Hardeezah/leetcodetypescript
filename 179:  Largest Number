@@ -1,0 +1,14 @@
+function largestNumber(nums: number[]): string {
+    
+    // Convert numbers to strings for easy comparison
+    const strs = nums.map(num => num.toString());
+
+    // Sort the array based on the custom comparator
+    strs.sort((a, b) => (b + a).localeCompare(a + b));
+
+    // Join the sorted strings into one large number
+    const result = strs.join('');
+
+    // Edge case: if the result is all zeroes (e.g., [0, 0]), return '0' instead of '000'
+    return result[0] === '0' ? '0' : result;
+};
