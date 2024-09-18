@@ -1,0 +1,37 @@
+function findMinDifference(timePoints: string[]): number {
+    if (timePoints.length > 1440) {
+        return 0; 
+    }
+
+    const minuteSeen = new Array(1440).fill(false);
+   
+    for (let time of timePoints) {
+        const [hours, minutes] = time.split(':').map(Number);
+        const totalMinutes = hours * 60 + minutes;
+        if (minuteSeen[totalMinutes]) {
+            return 0; // Duplicate time point found
+        }
+        minuteSeen[totalMinutes] = true;
+    }
+
+    let firstSeen = -1;
+    let prevSeen = -1;
+    let minDifference = 1440; // Maximum possible difference is 1440 minutes
+
+    for (let i = 0; i < 1440; i++) {
+        if (minuteSeen[i]) {
+            if (firstSeen === -1) {
+                firstSeen = i; // Mark the first time point
+            }
+            if (prevSeen !== -1) {
+                minDifference = Math.min(minDifference, i - prevSeen);
+            }
+            prevSeen = i;
+        }
+    }
+
+    // Compare the difference between the first and last time points across midnight
+    minDifference = Math.min(minDifference, 1440 - prevSeen + firstSeen);
+
+    return minDifference;
+}
