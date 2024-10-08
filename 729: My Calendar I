@@ -1,0 +1,19 @@
+class MyCalendar {
+    private calendar: number[][];
+
+    constructor() {
+        this.calendar = []; // Initialize the calendar
+    }
+
+    book(start: number, end: number): boolean {
+        // Check for conflicts
+        for (const item of this.calendar) {
+            if (end > item[0] && start < item[1]) {
+                return false; // Conflict found
+            }
+        }
+        // No conflict, add the event to the calendar
+        this.calendar.push([start, end]);
+        return true; // Successfully booked
+    }
+}
