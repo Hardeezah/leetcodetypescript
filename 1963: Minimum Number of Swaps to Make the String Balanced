@@ -1,0 +1,23 @@
+function minSwaps(s: string): number {
+   
+    let balance = 0;  // Tracks current balance of '[' and ']'
+    let maxImbalance = 0;  // Tracks the maximum imbalance encountered
+
+    // Iterate through the string
+    for (const char of s) {
+        // Increase balance for '[' and decrease for ']'
+        if (char === '[') {
+            balance++;
+        } else {
+            balance--;
+        }
+
+        // Track the most negative balance (i.e., the maximum imbalance)
+        if (balance < 0) {
+            maxImbalance = Math.max(maxImbalance, -balance);
+        }
+    }
+
+    return Math.ceil(maxImbalance / 2);
+
+};
