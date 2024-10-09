@@ -1,0 +1,17 @@
+function minAddToMakeValid(s: string): number {
+    let balance = 0;  // Tracks unmatched opening parentheses '('
+    let addCount = 0; // Tracks the number of insertions required for unmatched closing ')'
+
+    for (const char of s) {
+        if (char === '(') {
+            balance++;  // Increment for an opening parenthesis
+        } else {
+            // Decrement if we have an unmatched '('
+            if (balance > 0) {
+                balance--;
+            } else {
+                // Otherwise, we need to insert an opening parenthesis
+                addCount++;
+            }
+        }
+    }
